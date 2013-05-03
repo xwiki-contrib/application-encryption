@@ -29,7 +29,7 @@
   </parent>
   <groupId>org.xwiki.contrib</groupId>
   <artifactId>application-encryption</artifactId>
-  <name>XWiki Encryption Application</name>
+  <name>Encryption Application</name>
   <description>Let admins encrypt data directly in the wiki.</description>
   <packaging>pom</packaging>
   <version>1.1-SNAPSHOT</version>

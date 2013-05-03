@@ -30,7 +30,8 @@
     <version>1.1-SNAPSHOT</version>
   </parent>
   <artifactId>application-encryption-api</artifactId>
-  <name>XWiki Encryption API</name>
+  <name>Encryption Application API</name>
+  <packaging>jar</packaging>
   <dependencies>
     <dependency>
       <groupId>org.xwiki.commons</groupId>
