@@ -36,6 +36,14 @@
     <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Encryption Application</xwiki.extension.name>
   </properties>
+  <dependencies>
+    <dependency>
+      <groupId>org.xwiki.contrib</groupId>
+      <artifactId>application-encryption-api</artifactId>
+      <version>${project.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+  </dependencies>
   <build>
     <!-- Needed to add support for the XAR packaging -->
     <extensions>
