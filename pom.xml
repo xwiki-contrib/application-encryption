@@ -32,7 +32,7 @@
   <name>XWiki Encryption Application</name>
   <description>Let admins encrypt data directly in the wiki.</description>
   <packaging>pom</packaging>
-  <version>1.0</version>
+  <version>1.1-SNAPSHOT</version>
   <properties>
     <platform.version>${commons.version}</platform.version>
   </properties>
