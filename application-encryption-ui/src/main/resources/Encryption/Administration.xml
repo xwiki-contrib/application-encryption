@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+  <web>Encryption</web>
+  <name>Administration</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>Encryption.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1364305548000</creationDate>
+  <date>1364393734000</date>
+  <contentUpdateDate>1364393731000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Administration</title>
+  <template/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.1</syntaxId>
+  <hidden>false</hidden>
+  <content>{{velocity}}
+  #if($!request.scope == "wiki")
+  ##
+  ##Handle rights on the whole wiki
+  ##
+    $msg.get('encryption.administration.listWiki')
+    #set($decryptionObj = $doc.getObject('Encryption.DecryptionRightClass', 'type', 'Wiki'))
+    #if(!$decryptionObj)
+      #set($nb = $doc.createNewObject('Encryption.DecryptionRightClass'))
+      #set($decryptionObj = $doc.getObject('Encryption.DecryptionRightClass', $nb))
+      #set($discard = $decryptionObj.set('type', 'Wiki'))
+      #set($discard = $doc.save())
+    #end
+    $decryptionObj.display('authorizedUsers', 'edit')
+  #elseif($!request.scope == "space")
+  ##
+  ##Handle rights on a given space
+  ##
+    #set($space = $request.space)
+    #set($objects = $doc.getObjects('Encryption.DecryptionRightClass', 'name', "$space"))
+    #foreach($object in $objects)
+      #if($doc.getValue('type', $object) == 'Space')
+        #set($decryptionObj = $object)
+      #end
+    #end
+    #if(!$decryptionObj)
+      #set($nb = $doc.createNewObject('Encryption.DecryptionRightClass'))
+      #set($decryptionObj = $doc.getObject('Encryption.DecryptionRightClass', $nb))
+      #set($discard = $decryptionObj.set('name', $space)) 
+      #set($discard = $decryptionObj.set('type', 'Space'))
+      #set($discard = $doc.save())
+    #end
+    $msg.get('encryption.administration.spaceAuthorized', ["$space"])
+    $decryptionObj.display('authorizedUsers', 'edit')
+
+
+    #set($xwqlStatement = "from doc.object(Encryption.ProtectedFieldClass) as encryptedField where doc.space='"+$space+"'")
+    #set($pages = $services.query.xwql("$xwqlStatement").addFilter('unique').execute())
+    $msg.get('encryption.administration.listPages', ["$space"])
+    #foreach($page in $pages)
+      [[$page&gt;&gt;path:$doc.getURL('inline', "scope=page&amp;page=$page")]]
+    #end
+  #elseif($request.scope == 'page')
+  ##
+  ##Handle rights on a given space
+  ##
+    #set($page = $request.page)
+    #set($objects = $doc.getObjects('Encryption.DecryptionRightClass', 'name', "$page"))
+    #foreach($object in $objects)
+      #if($doc.getValue('type', $object) == 'Page')
+        #set($decryptionObj = $object)
+      #end
+    #end
+    #if(!$decryptionObj)
+      #set($nb = $doc.createNewObject('Encryption.DecryptionRightClass'))
+      #set($decryptionObj = $doc.getObject('Encryption.DecryptionRightClass', $nb))
+      #set($discard = $decryptionObj.set('name', $page)) 
+      #set($discard = $decryptionObj.set('type', 'Page'))
+      #set($discard = $doc.save())
+    #end
+    $msg.get('encryption.administration.pageAuthorized', ["$page"])
+    $decryptionObj.display('authorizedUsers', 'edit')
+    ##set($document = $xwiki.getDocument($page))
+    ##$msg.get('encryption.administration.backToPage') : [[$document.getDisplayTitle()&gt;&gt;path:$document.getURL('view')]]
+  #elseif($xcontext.action == 'view')
+    #set($spaceList = $xwiki.getSpaces())
+    $msg.get('encryption.administration.message')
+
+    [[$msg.get('encryption.administration.wiki')&gt;&gt;path:$doc.getURL('inline', 'scope=wiki')]]
+  
+    {{html wiki = 'true'}}
+      &lt;form action="$doc.getURL('inline')" method='get'&gt;
+        &lt;input type='hidden' name='scope' value='space'&gt;
+        &lt;select name="space"&gt;
+        #foreach($space in $spaceList)
+          &lt;option value="$space"&gt;$space&lt;/option&gt;
+        #end
+        &lt;/select&gt;
+        &lt;input type='submit' class='button' value="$msg.get('encryption.administration.space')"&gt;
+      &lt;/form&gt;
+    {{/html}}
+  #end
+{{/velocity}}</content>
+</xwikidoc>

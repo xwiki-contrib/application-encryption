@@ -1,0 +1,2 @@
+org.xwiki.contrib.encryption.internal.DefaultEncryptionTool
+org.xwiki.contrib.encryption.internal.EncryptionToolScriptService

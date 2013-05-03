@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+  <web>Encryption</web>
+  <name>WebHome</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>Dashboard.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1362395641000</creationDate>
+  <date>1362395647000</date>
+  <contentUpdateDate>1362395641000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Encryption</title>
+  <template/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.0</syntaxId>
+  <hidden>false</hidden>
+  <object>
+    <class>
+      <name>XWiki.DocumentSheetBinding</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <sheet>
+        <customDisplay/>
+        <disabled>0</disabled>
+        <name>sheet</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>Sheet</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </sheet>
+    </class>
+    <name>Encryption.WebHome</name>
+    <number>0</number>
+    <className>XWiki.DocumentSheetBinding</className>
+    <guid>bae513e2-ba7e-4c9a-9699-b56557eaa705</guid>
+    <property>
+      <sheet/>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>XWiki.GadgetClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <content>
+        <disabled>0</disabled>
+        <editor>---</editor>
+        <name>content</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>content</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </content>
+      <position>
+        <disabled>0</disabled>
+        <name>position</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>position</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </position>
+      <title>
+        <disabled>0</disabled>
+        <name>title</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>title</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </title>
+    </class>
+    <name>Encryption.WebHome</name>
+    <number>0</number>
+    <className>XWiki.GadgetClass</className>
+    <guid>b05c0c8d-e95e-4cc7-8e45-9bf3b0fc4156</guid>
+    <property>
+      <content>{{velocity}}
+#if ($doc.space == "Main")
+  {{spaces /}}
+#else
+  {{spaceindex space="$doc.space" /}}
+#end
+{{/velocity}}
+</content>
+    </property>
+    <property>
+      <position>1,1</position>
+    </property>
+    <property>
+      <title>#if ($doc.space == "Main") $msg.get("platform.dashboard.wiki.spaces") #else $msg.get("platform.dashboard.space.documents", [$doc.space]) #end</title>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>XWiki.GadgetClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <content>
+        <disabled>0</disabled>
+        <editor>---</editor>
+        <name>content</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>content</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </content>
+      <position>
+        <disabled>0</disabled>
+        <name>position</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>position</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </position>
+      <title>
+        <disabled>0</disabled>
+        <name>title</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>title</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </title>
+    </class>
+    <name>Encryption.WebHome</name>
+    <number>1</number>
+    <className>XWiki.GadgetClass</className>
+    <guid>b8ce9127-289a-447d-a339-8ca23e20c247</guid>
+    <property>
+      <content>{{velocity}}
+#set($tagSpace = $NULL)
+#if ($doc.space != "Main")
+  #set($tagSpace = $doc.space)
+#end
+
+{{tagcloud  space="$!tagSpace" /}}
+{{/velocity}}
+</content>
+    </property>
+    <property>
+      <position>1,2</position>
+    </property>
+    <property>
+      <title>$msg.get("platform.dashboard.wiki.tagcloud")</title>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>XWiki.GadgetClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <content>
+        <disabled>0</disabled>
+        <editor>---</editor>
+        <name>content</name>
+        <number>2</number>
+        <picker>0</picker>
+        <prettyName>content</prettyName>
+        <rows>5</rows>
+        <size>40</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </content>
+      <position>
+        <disabled>0</disabled>
+        <name>position</name>
+        <number>3</number>
+        <picker>0</picker>
+        <prettyName>position</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </position>
+      <title>
+        <disabled>0</disabled>
+        <name>title</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>title</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </title>
+    </class>
+    <name>Encryption.WebHome</name>
+    <number>2</number>
+    <className>XWiki.GadgetClass</className>
+    <guid>e4fee082-fec0-46ef-9ae5-a4533ec0f34e</guid>
+    <property>
+      <content>{{velocity}}
+#set($aSpace = $NULL)
+#if ($doc.space != "Main")
+  #set ($aSpace = $doc.space)
+#end
+
+{{activity spaces="$!aSpace" /}}
+{{/velocity}}
+</content>
+    </property>
+    <property>
+      <position>2,1</position>
+    </property>
+    <property>
+      <title>#if ($doc.space != "Main") $msg.get("platform.dashboard.space.activity", [$doc.space]) #else $msg.get("platform.dashboard.wiki.activity") #end</title>
+    </property>
+  </object>
+  <content>{{dashboard/}}</content>
+</xwikidoc>
