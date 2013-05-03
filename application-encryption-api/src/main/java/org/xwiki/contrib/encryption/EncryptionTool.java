@@ -36,7 +36,7 @@ public interface EncryptionTool
     String encrypt(String clearText) ;
     
     /**
-     * Encrypt a text. Public
+     * Display an encrypted text if the user can see it.
      * 
      * @param encryptedText Text to be decrypted
      * @param editRight True if the user is allowed to see this

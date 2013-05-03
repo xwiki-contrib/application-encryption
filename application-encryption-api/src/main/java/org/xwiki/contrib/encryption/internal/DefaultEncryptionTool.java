@@ -90,14 +90,6 @@ public class DefaultEncryptionTool implements EncryptionTool
             logger.warn("Encrypt started");
             Cipher c1 = Cipher.getInstance("AES");
             SecretKeySpec key = this.getKey();
-            /*if(encryptionKey == null)
-            {
-                logger.warn("Encryption key retrieved is null") ;
-                return null ;
-            }*/
-            //encryptionKey = (encryptionKey == null ? "dcec021ee6276c234f4d13f6d7949a6" : encryptionKey); 
-            //byte[] keyData = new BigInteger(encryptionKey, 16).toByteArray();
-            //SecretKeySpec key = new SecretKeySpec(keyData, "AES");
             c1.init(Cipher.ENCRYPT_MODE, key);
             byte[] clearTextBytes;
             clearTextBytes = clearText.getBytes();
@@ -119,9 +111,6 @@ public class DefaultEncryptionTool implements EncryptionTool
                 Base64.decodeBase64(encryptedText.replaceAll("_", "=").getBytes("ISO-8859-1"));
             Cipher c1 = Cipher.getInstance("AES");
             SecretKeySpec key = this.getKey();
-            //encryptionKey = (encryptionKey == null ? "dcec021ee6276c234f4d13f6d7949a6" : encryptionKey); 
-            //byte[] keyData = new BigInteger(encryptionKey, 16).toByteArray();
-            //SecretKeySpec key = new SecretKeySpec(keyData, "AES");
             c1.init(Cipher.DECRYPT_MODE, key);
             byte[] decryptedText = c1.doFinal(decodedEncryptedText);
             String decryptedTextString = new String(decryptedText);
@@ -218,21 +207,6 @@ public class DefaultEncryptionTool implements EncryptionTool
         }
     }
     
-    /*private String setEncryptionKey()
-    {
-        try
-        {
-            File encryptionFile = this.getEncryptionFile();
-            String encryptionKey = this.generateRandomKey();
-            FileUtils.write(encryptionFile, encryptionKey);
-            return encryptionKey ;
-        }
-        catch(Exception e)
-        {
-            return null ;
-        }
-    }*/
-    
     private SecretKeySpec generateRandomKey()
     {
         try{
@@ -240,9 +214,6 @@ public class DefaultEncryptionTool implements EncryptionTool
             keyGenerator.init(128);
             SecretKey key = keyGenerator.generateKey();
             return (SecretKeySpec) key;
-            //byte[] encoded = key.getEncoded(); 
-            //String data = new BigInteger(encoded).toString(16);
-            //return data;
         }
         catch(Exception e)
         {
@@ -272,25 +243,16 @@ public class DefaultEncryptionTool implements EncryptionTool
             logger.warn("Cannot retrieve encryption key : " + e.getMessage());
             return null;
         }
-        /*try
-        {
-            File encryptionFile = this.getEncryptionFile();
-            if(encryptionFile.exists())
-            {
-                String fileContent = FileUtils.readFileToString(encryptionFile);
-                return fileContent;
-            }
-            /* If the file has not been created yet, let's do it 
-            else
-                return this.setEncryptionKey();
-        }
-        catch(Exception e)
-        {
-            
-            return null;
-        }*/
     }
     
+    /**
+     * 
+     * @param ks Keystore
+     * @param password Password of the keystore
+     * @param file File where the keystore is
+     * @return The keystore initiated
+     * @throws Exception
+     */
     private synchronized KeyStore initiateStore(KeyStore ks, char[] password, File file) throws Exception
     {
         if(file.exists())
@@ -305,7 +267,10 @@ public class DefaultEncryptionTool implements EncryptionTool
         return ks;
     }
     
-    /* Get the file where the encryptionKey is supposed to be stored */
+    /**
+     * Get the file where the encryptionKey is supposed to be stored.  
+     * @return The file where the key is to be stored.
+     */
     private File getEncryptionFile()
     {
         File permDir = environment.getPermanentDirectory();
@@ -314,18 +279,19 @@ public class DefaultEncryptionTool implements EncryptionTool
         return encryptionFile ;
     }
     
+    /**
+     * Store the encryption key.
+     * @param ks Keystore where the key should be stored
+     */
     private void storeEncryptionKey(KeyStore ks)
     {
         try
         {
-            logger.warn("Start storing password");
-            /*String encryptionKey = generateRandomKey();
-            byte[] keyData = new BigInteger(encryptionKey, 16).toByteArray();
-            SecretKeySpec key = new SecretKeySpec(keyData, "AES");*/
+            logger.debug("Start storing password");
             String storePassword = KEYSTORE_PASSWORD;
             String protection = ENCRYPTION_KEY_PROTECTION;
             SecretKeySpec key = generateRandomKey();
-            logger.warn("Encryption key generated : " + key);
+            logger.debug("Encryption key generated : " + key);
             KeyStore.SecretKeyEntry skEntry =
                 new KeyStore.SecretKeyEntry(key);
             ks.setEntry("encryptionKey", skEntry, 
@@ -350,7 +316,7 @@ public class DefaultEncryptionTool implements EncryptionTool
         String protection = ENCRYPTION_KEY_PROTECTION;
         try
         {
-            logger.warn("Start retrieving password");
+            logger.debug("Start retrieving password");
             KeyStore.SecretKeyEntry pkEntry = (KeyStore.SecretKeyEntry)
                 ks.getEntry("encryptionKey", new KeyStore.PasswordProtection(protection.toCharArray()));
             SecretKeySpec mySecretKey = (SecretKeySpec) pkEntry.getSecretKey();
