@@ -87,7 +87,7 @@ public class DefaultEncryptionTool implements EncryptionTool
     public String encrypt(String clearText)
     {
         try{
-            logger.warn("Encrypt started");
+            logger.debug("Encrypt started");
             Cipher c1 = Cipher.getInstance("AES");
             SecretKeySpec key = this.getKey();
             c1.init(Cipher.ENCRYPT_MODE, key);
@@ -106,7 +106,7 @@ public class DefaultEncryptionTool implements EncryptionTool
     private String decrypt(String encryptedText)
     {
         try {
-            logger.warn("Decrypt started");
+            logger.debug("Decrypt started");
             byte[] decodedEncryptedText =
                 Base64.decodeBase64(encryptedText.replaceAll("_", "=").getBytes("ISO-8859-1"));
             Cipher c1 = Cipher.getInstance("AES");
@@ -142,7 +142,7 @@ public class DefaultEncryptionTool implements EncryptionTool
             logger.warn("WikiName : " + wiki);
             if(xwikiContext.getWiki().getRightService().hasAccessLevel("admin", stringSerializer.serialize(userRef), "XWiki.XWikiPreferences", xwikiContext))
             {
-                logger.warn("Current user has programming rights on this wiki.");
+                logger.debug("Current user has programming rights on this wiki.");
                 return true ;
             }
             String adminPage = wiki + ":Encryption.Administration";
@@ -159,7 +159,7 @@ public class DefaultEncryptionTool implements EncryptionTool
                 {
                     if(scan.next().equals(currentUser))
                     {
-                        logger.warn("Current user has decryption rights on the whole wiki");
+                        logger.debug("Current user has decryption rights on the whole wiki");
                         return true ;
                     }
                 }
@@ -175,7 +175,7 @@ public class DefaultEncryptionTool implements EncryptionTool
                 {
                     if(scanSpace.next().equals(currentUser))
                     {
-                        logger.warn("Current user has decryption rights on this space");
+                        logger.debug("Current user has decryption rights on this space");
                         return true ;
                     }
                 }
@@ -185,15 +185,15 @@ public class DefaultEncryptionTool implements EncryptionTool
             nb = this.documentAccessBridge.getObjectNumber(docRef, classRef, "name", page);
             if(nb >= 0)
             {
-                logger.warn("Object found");
+                logger.debug("Object found");
                 Object authorizedUsersPage = this.documentAccessBridge.getProperty(docRef, classRef, nb, "authorizedUsers");
-                logger.warn("Authorized users : " + authorizedUsersPage.toString());
+                logger.debug("Authorized users : " + authorizedUsersPage.toString());
                 Scanner scanPage = new Scanner(authorizedUsersPage.toString()).useDelimiter(",");
                 while(scanPage.hasNext())
                 {
                     if(scanPage.next().equals(currentUser))
                     {
-                        logger.warn("Current user has decryption rights on this page");
+                        logger.debug("Current user has decryption rights on this page");
                         return true ;
                     }
                 }
@@ -303,7 +303,7 @@ public class DefaultEncryptionTool implements EncryptionTool
             }
             FileOutputStream fos = new FileOutputStream(file);
             ks.store(fos, storePassword.toCharArray());
-            logger.warn("Finish storing encryption key");
+            logger.debug("Finish storing encryption key");
         }
         catch(Exception e)
         {
