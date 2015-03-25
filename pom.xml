@@ -40,6 +40,7 @@
 
   <properties>
     <platform.version>${commons.version}</platform.version>
+	<xwiki.enforcer.skip>true</xwiki.enforcer.skip>
   </properties>
 
   <scm>
