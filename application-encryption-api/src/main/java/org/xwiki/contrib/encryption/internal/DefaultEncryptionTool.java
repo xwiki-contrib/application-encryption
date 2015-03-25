@@ -42,7 +42,6 @@ import org.xwiki.environment.Environment;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.DocumentReferenceResolver;
 import org.xwiki.model.reference.EntityReferenceSerializer;
-import org.xwiki.security.authorization.AuthorizationManager;
 
 import com.xpn.xwiki.XWikiContext;
 
@@ -138,7 +137,7 @@ public class DefaultEncryptionTool implements EncryptionTool
             DocumentReference userRef = this.documentAccessBridge.getCurrentUserReference();
             logger.debug("Proper wiki : "
                 + documentAccessBridge.getCurrentDocumentReference().getWikiReference().toString());
-            String wiki = documentAccessBridge.getCurrentDocumentReference().getWikiReference().getName();
+            String wiki = documentAccessBridge.getCurrentWiki();
             logger.debug("WikiName : " + wiki);
             if (xwikiContext.getWiki().getRightService()
                 .hasAccessLevel("admin", stringSerializer.serialize(userRef), "XWiki.XWikiPreferences", xwikiContext)) {
