@@ -36,7 +36,7 @@
   <name>Encryption Application</name>
   <description>Let admins encrypt data directly in the wiki.</description>
   <packaging>pom</packaging>
-  <version>1.3</version>
+  <version>1.3-SNAPSHOT</version>
 
   <properties>
     <platform.version>${commons.version}</platform.version>
@@ -46,7 +46,7 @@
     <connection>scm:git:git://github.com/xwiki-contrib/application-encryption.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/application-encryption.git</developerConnection>
     <url>https://github.com/xwiki-contrib/application-encryption.git</url>
-    <tag>application-encryption-1.3</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
